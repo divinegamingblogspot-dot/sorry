@@ -16,6 +16,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Validate website and JavaScript
+        shell: bash
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import re
+          html = Path("index.html").read_text(encoding="utf-8")
+          class CheckHTML(HTMLParser):
+              def error(self, message):
+                  raise RuntimeError(message)
+          CheckHTML(convert_charrefs=True).feed(html)
+          for required in ('id="intro"', 'id="letter"', 'id="promises"', 'id="response"', 'id="musicBtn"'):
+              assert required in html, f"Missing expected page element: {required}"
+          scripts = re.findall(r"<script\\b[^>]*>(.*?)</script>", html, re.I | re.S)
+          assert scripts, "No inline JavaScript found"
+          Path("/tmp/site-check.js").write_text("\\n".join(scripts), encoding="utf-8")
+          print("HTML parsed; key sections and interactive controls found.")
+          PY
+          node --check /tmp/site-check.js
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
