@@ -194,4 +194,111 @@ function playNote(){if(!audio||!playing)return;const notes=[523.25,659.25,783.99
 document.getElementById('musicBtn').addEventListener('click',async()=>{if(playing){stopMusic();return}try{const ctx=new (window.AudioContext||window.webkitAudioContext)();await ctx.resume();audio={ctx};playing=true;const b=document.getElementById('musicBtn');b.textContent='♫ Little melody: on';b.setAttribute('aria-pressed','true');playNote()}catch(e){document.getElementById('musicBtn').textContent='Melody unavailable'}})
 })();
 </script>
+
+<style>
+/* Little extras, made gently */
+#extra-magic{position:relative;z-index:2;max-width:900px;margin:2rem auto;padding:1.2rem}
+.magic-card{background:#ffffffbd;border:1px solid #f4c9d6;border-radius:28px;padding:clamp(1.2rem,4vw,2rem);margin:1.1rem 0;box-shadow:0 15px 45px #9b365018;text-align:center;backdrop-filter:blur(10px)}
+.magic-card h2{margin:.25rem 0 .7rem;color:var(--deep);font-size:clamp(1.4rem,4vw,2rem)}
+.magic-card p{line-height:1.8}.magic-btn{border:0;border-radius:999px;padding:.8rem 1.15rem;margin:.35rem;background:linear-gradient(135deg,#d94f79,#a83260);color:white;box-shadow:0 7px 18px #a8326025;transition:transform .2s}.magic-btn:hover{transform:translateY(-2px)}.magic-btn.soft{background:#fff0f4;color:#8c3152;border:1px solid #f1c0d0;box-shadow:none}
+#letter-envelope{width:min(100%,360px);height:220px;margin:1.3rem auto;position:relative;cursor:pointer;perspective:900px;outline-offset:8px}
+.env-back{position:absolute;inset:15px 0 0;background:#eaa5b9;border-radius:12px;box-shadow:0 15px 30px #8c315222}
+.env-paper{position:absolute;left:8%;right:8%;top:24px;height:155px;background:#fffdf9;border-radius:8px;padding:18px 14px;color:#8a3d59;line-height:1.5;transition:transform .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 2px 9px #7d29481c}
+.env-front{position:absolute;inset:65px 0 0;background:linear-gradient(145deg,#f6c4d1,#df829e);clip-path:polygon(0 0,50% 60%,100% 0,100% 100%,0 100%);border-radius:0 0 12px 12px}
+.env-flap{position:absolute;top:15px;left:0;width:100%;height:110px;background:#f3b6c8;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .7s;z-index:3;filter:drop-shadow(0 3px 2px #9c45601a)}
+.env-seal{position:absolute;z-index:4;left:calc(50% - 19px);top:90px;font-size:35px;transition:opacity .25s}
+#letter-envelope.open .env-flap{transform:rotateX(180deg);z-index:0}#letter-envelope.open .env-paper{transform:translateY(-95px);height:180px;z-index:2}
+#letter-envelope.open .env-seal{opacity:0}
+#bloom-stage{min-height:185px;display:grid;place-items:center;position:relative;overflow:hidden}
+.bloom-flower{font-size:72px;display:inline-block;filter:drop-shadow(0 8px 10px #d94f7930);transform:scale(.65) rotate(-12deg);transition:transform .7s cubic-bezier(.2,1.5,.4,1)}
+.bloom-flower.bloomed{transform:scale(1.25) rotate(0deg)}
+#hug-heart{display:inline-grid;place-items:center;width:94px;height:94px;font-size:55px;cursor:pointer;animation:gentleBeat 1.6s ease-in-out infinite;filter:drop-shadow(0 6px 12px #d94f7933)}
+@keyframes gentleBeat{0%,100%{transform:scale(1)}14%{transform:scale(1.13)}28%{transform:scale(1)}42%{transform:scale(1.08)}}
+#constellation{width:100%;height:210px;border-radius:18px;background:radial-gradient(ellipse at 50% 100%,#653b65,#241e42 75%);display:block}
+#constellation-caption{color:#6f4a66;font-style:italic}
+#secret-note{min-height:70px;font-size:1.12rem;color:#7d2948}
+.magic-spark{position:fixed;z-index:99;pointer-events:none;animation:magicPop 1.15s ease-out forwards}
+@keyframes magicPop{0%{opacity:1;transform:translate(0,0) scale(.6) rotate(0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.5) rotate(35deg)}}
+@media(prefers-reduced-motion:reduce){.bloom-flower,#hug-heart,.magic-spark{animation:none!important;transition:none!important}#letter-envelope *{transition:none!important}}
+</style>
+<section id="extra-magic" aria-label="Little things made for you">
+  <div class="magic-card">
+    <p>✉️ &nbsp; A LITTLE LETTER, JUST FOR YOU</p>
+    <h2>Open this when you're ready</h2>
+    <p>No pressure, no perfect words. Just something honest from my heart.</p>
+    <div id="letter-envelope" role="button" tabindex="0" aria-label="Open the love letter" aria-expanded="false">
+      <div class="env-back"></div><div class="env-paper">My favourite person,<br><br>I'm sorry. I want to listen, learn, and show you through my actions. ♡</div><div class="env-front"></div><div class="env-flap"></div><div class="env-seal">♥</div>
+    </div>
+    <p id="envelope-hint">Tap the envelope to open your letter ♡</p>
+  </div>
+  <div class="magic-card">
+    <p>🌷 &nbsp; A TINY GARDEN FOR YOU</p>
+    <h2>Even after a hard day, softness can grow</h2>
+    <p>Tap to help this little flower bloom. You deserve gentleness, even on the days we're figuring things out.</p>
+    <div id="bloom-stage"><span id="bloom-flower" class="bloom-flower" aria-label="Flower bud">🌷</span></div>
+    <button class="magic-btn" id="bloom-btn">Help it bloom 🌸</button>
+    <p id="bloom-caption" aria-live="polite">One small act of care at a time.</p>
+  </div>
+  <div class="magic-card">
+    <p>🫂 &nbsp; A HUG, IF YOU WANT ONE</p>
+    <h2>Sending you the gentlest virtual hug</h2>
+    <p>Only if it feels good to you. You never have to pretend you're okay for my sake.</p>
+    <button class="magic-btn soft" id="hug-btn"><span id="hug-heart">♡</span><br>Tap for a little hug</button>
+    <p id="hug-caption" aria-live="polite">Imagine a warm blanket, a quiet moment, and no pressure to reply.</p>
+  </div>
+  <div class="magic-card">
+    <p>✨ &nbsp; OUR LITTLE SKY</p>
+    <h2>Some things are worth taking care of</h2>
+    <canvas id="constellation" aria-label="A night sky with a heart-shaped constellation"></canvas>
+    <p id="constellation-caption">A little heart in a big sky — made of tiny moments and choices.</p>
+    <button class="magic-btn soft" id="sky-btn">Make a wish ✨</button>
+  </div>
+  <div class="magic-card">
+    <p>💌 &nbsp; A NOTE FOR THIS MOMENT</p>
+    <h2>Whenever you need a little kindness</h2>
+    <p id="secret-note" aria-live="polite">You don't have to forgive me today for my apology to be sincere.</p>
+    <button class="magic-btn" id="note-btn">Another little note ♡</button>
+  </div>
+  <div class="magic-card">
+    <h2>What I want you to know</h2>
+    <p>I'm not asking you to forget what hurt. I'm asking for the chance to understand it better and to earn trust with patience, honesty, and consistent actions. Your feelings matter. Your boundaries matter. And your happiness should never come at the cost of your peace.</p>
+    <p><strong>I'm sorry for the hurt. I care about you. I'll keep working on being better — not just saying it.</strong></p>
+  </div>
+</section>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const envelope=$('letter-envelope');
+ function toggleEnvelope(){const open=envelope.classList.toggle('open');envelope.setAttribute('aria-expanded',String(open));$('envelope-hint').textContent=open?'A little reminder: you are loved, and you deserve actions that feel safe and kind. ♡':'Tap the envelope to open your letter ♡';}
+ envelope.addEventListener('click',toggleEnvelope);envelope.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleEnvelope();}});
+ let bloomed=false;
+ $('bloom-btn').addEventListener('click',()=>{bloomed=!bloomed;$('bloom-flower').classList.toggle('bloomed',bloomed);$('bloom-flower').textContent=bloomed?'💐':'🌷';$('bloom-caption').textContent=bloomed?'A little bloom for you — may your day hold a little softness. ♡':'Every gentle thing starts small.';sprinkle(bloomed?24:8);});
+ $('hug-btn').addEventListener('click',()=>{const h=$('hug-heart');h.textContent='♥';$('hug-caption').textContent='Big, gentle hug. No expectations, no pressure — just warmth, if you want it. ♡';sprinkle(18);setTimeout(()=>{h.textContent='♡'},1400);});
+ const notes=[
+ 'You don’t have to forgive me today for my apology to be sincere.',
+ 'Your feelings are not “too much.” I want to understand them better.',
+ 'You deserve patience, honesty, care, and peace — every day.',
+ 'I can’t change the moment that hurt you, but I can choose what I do next.',
+ 'I want my actions to make you feel cared for, not just my words.',
+ 'You can take all the time and space you need. I will respect that.',
+ 'I’m sorry for the pain I caused. I’m listening, even when it is difficult.',
+ 'Love should feel safe. I want to do my part to make it feel that way.',
+ 'You don’t owe me a quick answer. Your heart gets to move at its own pace.',
+ 'I want to learn what helps you feel heard, valued, and understood.',
+ 'One apology cannot fix everything. Consistency, honesty, and time matter.',
+ 'You are important to me, and so are your boundaries.',
+ 'I hope something small makes you smile today. You deserve that softness.',
+ 'I won’t ask you to trust a promise blindly. I want to earn it.',
+ 'Whatever you feel right now, you are allowed to feel it.'
+ ];let last=-1;
+ $('note-btn').addEventListener('click',()=>{let n;do{n=Math.floor(Math.random()*notes.length)}while(n===last);last=n;$('secret-note').textContent=notes[n];});
+ function sprinkle(count){const symbols=['♡','♥','✦','🌸','✨'];for(let i=0;i<count;i++){const el=document.createElement('span');el.className='magic-spark';el.textContent=symbols[Math.floor(Math.random()*symbols.length)];el.style.left=(35+Math.random()*30)+'vw';el.style.top=(38+Math.random()*24)+'vh';el.style.fontSize=(14+Math.random()*20)+'px';el.style.setProperty('--dx',((Math.random()-.5)*240)+'px');el.style.setProperty('--dy',(-60-Math.random()*200)+'px');document.body.appendChild(el);setTimeout(()=>el.remove(),1250);}}
+ const canvas=$('constellation'),ctx=canvas.getContext&&canvas.getContext('2d');
+ function drawSky(){if(!ctx)return;const dpr=Math.min(window.devicePixelRatio||1,2),w=canvas.clientWidth||600,h=210;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);let seed=19;const rand=()=>{seed=(seed*9301+49297)%233280;return seed/233280};for(let i=0;i<90;i++){ctx.beginPath();ctx.arc(rand()*w,rand()*h,rand()*1.5+.25,0,Math.PI*2);ctx.fillStyle='rgba(255,245,255,'+(rand()*.8+.2)+')';ctx.fill();}
+ const pts=[[-.5,-.15],[-.32,-.36],[-.13,-.23],[0,-.04],[.13,-.23],[.32,-.36],[.5,-.15],[.38,.1],[0,.48],[-.38,.1]].map(([x,y])=>[w/2+x*w*.36,h/2+y*h*.75]);ctx.strokeStyle='#ffc9df';ctx.lineWidth=1.7;ctx.shadowColor='#ff9bc7';ctx.shadowBlur=8;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.stroke();pts.forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle='#fff4fa';ctx.fill()});ctx.shadowBlur=0;}
+ $('sky-btn').addEventListener('click',()=>{drawSky();$('constellation-caption').textContent='Wish for peace, soft days, honest words, and love that feels safe. ✨';sprinkle(16);});
+ drawSky();if('ResizeObserver'in window)new ResizeObserver(drawSky).observe(canvas);
+})();
+</script>
+
 </body></html>
