@@ -136,7 +136,7 @@ document.getElementById('bloomButton').addEventListener('click',()=>{
 document.querySelectorAll('[data-promise]').forEach(b=>b.addEventListener('click',()=>{
  const msg=document.getElementById('promiseMessage');msg.textContent=b.dataset.promise;msg.hidden=false;
 }));
-\nlet audio=null,playing=false, timer=null,step=0;
+let audio=null,playing=false, timer=null,step=0;
 function stopMusic(){if(audio){try{audio.osc.stop()}catch(e){}audio.ctx.close();audio=null}if(timer)clearTimeout(timer);playing=false;const b=document.getElementById('musicBtn');b.textContent='♫ Little melody: off';b.setAttribute('aria-pressed','false')}
 function playNote(){if(!audio||!playing)return;const notes=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,587.33,659.25,523.25];const ctx=audio.ctx;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=notes[step%notes.length];gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.045,ctx.currentTime+.04);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.42);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.45);step++;timer=setTimeout(playNote,470)}
 document.getElementById('musicBtn').addEventListener('click',async()=>{if(playing){stopMusic();return}try{const ctx=new (window.AudioContext||window.webkitAudioContext)();await ctx.resume();audio={ctx};playing=true;const b=document.getElementById('musicBtn');b.textContent='♫ Little melody: on';b.setAttribute('aria-pressed','true');playNote()}catch(e){document.getElementById('musicBtn').textContent='Melody unavailable'}})
