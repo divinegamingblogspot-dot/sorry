@@ -35,6 +35,30 @@ section{padding:82px 20px;max-width:1060px;margin:auto}.hero{min-height:84vh;dis
 .apology-note{margin:20px auto 0;max-width:650px;min-height:84px;padding:20px;border-radius:20px;background:#fff9fb;border:1px dashed #e9a9bd;color:var(--deep);line-height:1.8}
 .love-extra-btn{border:1px solid #f0c0cf;background:#fffafc;color:var(--deep);border-radius:999px;padding:12px 17px}
 @media(max-width:650px){.love-note-grid{grid-template-columns:1fr}}
+
+/* Dreamy CSS 3D apology scene */
+.heart-universe{position:relative;max-width:850px;margin:10px auto 0;min-height:340px;display:grid;place-items:center;perspective:1000px;isolation:isolate}
+.heart-stage{position:relative;width:min(100%,620px);height:320px;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .25s ease}
+.heart-orb{position:absolute;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle at 30% 24%,#fff 0 3%,#ffdce8 13%,#f7a9c3 45%,#db5b86 73%,#a52e5b 100%);box-shadow:inset -18px -22px 35px #8d214b42,inset 10px 12px 30px #fff9,0 25px 55px #c9477440;transform:translateZ(-25px);animation:orbFloat 5s ease-in-out infinite}
+.heart-orb:after{content:"";position:absolute;inset:17px;border:1px solid #fff9;border-radius:50%;transform:rotateX(70deg) scaleY(.38)}
+.heart-core{position:relative;z-index:2;font-size:112px;line-height:1;filter:drop-shadow(0 18px 15px #9b31534a);transform:translateZ(55px);animation:heart3d 3s ease-in-out infinite;cursor:pointer;user-select:none}
+.orbit{position:absolute;width:275px;height:112px;border:2px solid #e78aaa9c;border-radius:50%;transform:rotateX(68deg) rotateZ(-25deg);transform-style:preserve-3d;animation:orbitSpin 9s linear infinite}
+.orbit.orbit-two{width:315px;height:140px;border-color:#f2c0cf;transform:rotateX(68deg) rotateZ(42deg);animation-duration:13s;animation-direction:reverse}
+.orbit-dot{position:absolute;top:50%;left:-8px;width:16px;height:16px;border-radius:50%;background:#fff8fb;border:3px solid #d94f79;box-shadow:0 0 18px #e67ea4;transform:translateZ(1px)}
+.doodle{position:absolute;z-index:3;fill:none;stroke:#d94f79;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.85;overflow:visible}
+.doodle-one{width:100px;left:5%;top:22%;transform:rotate(-12deg);animation:doodleWiggle 4s ease-in-out infinite}
+.doodle-two{width:94px;right:5%;top:20%;transform:rotate(12deg);animation:doodleWiggle 4.5s ease-in-out infinite reverse}
+.doodle-three{width:66px;left:17%;bottom:5%;stroke:#e6a1b7}
+.doodle-four{width:62px;right:17%;bottom:7%;stroke:#e6a1b7}
+.heart-caption{position:relative;z-index:4;margin-top:-10px;color:var(--muted);font:italic 1.1rem Georgia,serif;text-align:center}
+.heart-caption strong{color:var(--deep);font-weight:500}
+.heart-touch{border:1px solid #efbfd0;background:#fffafc;color:var(--deep);border-radius:99px;padding:12px 18px;margin-top:12px}
+@keyframes orbFloat{0%,100%{transform:translate3d(0,0,-25px)}50%{transform:translate3d(0,-12px,-25px)}}
+@keyframes heart3d{0%,100%{transform:translateZ(55px) rotateY(-8deg) scale(1)}50%{transform:translateZ(75px) rotateY(8deg) scale(1.08)}}
+@keyframes orbitSpin{from{rotate:0deg}to{rotate:360deg}}
+@keyframes doodleWiggle{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -8px;rotate:4deg}}
+@media(max-width:600px){.heart-universe{min-height:290px}.heart-stage{height:275px}.heart-orb{width:150px;height:150px}.heart-core{font-size:88px}.orbit{width:230px;height:95px}.orbit.orbit-two{width:265px;height:115px}.doodle-one{left:0;width:70px}.doodle-two{right:0;width:70px}.doodle-three{left:8%;width:50px}.doodle-four{right:8%;width:48px}}
+
 </style>
 </head>
 <body>
@@ -43,6 +67,20 @@ section{padding:82px 20px;max-width:1060px;margin:auto}.hero{min-height:84vh;dis
 <header class="topbar"><div class="brand">just us <span>♡</span></div><button class="music" id="musicBtn" aria-pressed="false">♫ Little melody: off</button></header>
 <main>
 <section class="hero" id="home"><div><div class="hero-heart" aria-hidden="true">💗</div><div class="eyebrow">to my favourite person</div><h1>I'm sorry,<br><em>my love.</em></h1><p>I know words can't undo the hurt. But I hope this little page can make you feel how deeply I care, how sorry I am, and how much I want to do better for us.</p><div class="actions"><button class="btn primary" data-scroll="#letter">Read my heart ♡</button><button class="btn soft" data-scroll="#promises">See my promises</button></div><div class="scroll-note">made gently, just for you ↓</div></div></section>
+
+<section id="three-d-heart">
+<div class="center reveal"><div class="eyebrow">a little world made for you</div><h2 class="section-title">If I could put my heart in your hands…</h2><p class="section-copy">I'd give it to you gently, with an apology, a little warmth, and the promise to care for it—and yours—with more thought.</p></div>
+<div class="heart-universe reveal" id="heartUniverse">
+<svg class="doodle doodle-one" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 50 C10 25 36 20 49 39 C62 18 90 26 87 49 C84 69 52 87 49 90 C44 84 10 69 10 50Z"/><path d="M24 47 Q34 37 42 48 M61 48 Q70 38 78 46"/><path d="M36 59 Q49 72 63 58"/></svg>
+<svg class="doodle doodle-two" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 10 C42 27 25 38 12 52 C34 48 45 58 50 88 C56 59 67 48 89 52 C75 38 58 27 50 10Z"/><path d="M50 23 L50 76 M26 52 L74 52"/></svg>
+<svg class="doodle doodle-three" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 88 C44 69 22 58 22 38 C22 21 42 19 50 34 C59 17 79 23 78 40 C77 59 58 71 50 88Z"/><path d="M50 87 L50 98"/></svg>
+<svg class="doodle doodle-four" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 12 C39 28 23 40 23 56 C23 76 39 87 50 87 C62 87 78 76 78 56 C78 40 61 27 50 12Z"/><path d="M34 54 Q50 38 66 54 Q50 73 34 54Z"/></svg>
+<div class="heart-stage" id="heartStage" aria-label="Animated three dimensional heart">
+<div class="heart-orb"></div><div class="orbit"><span class="orbit-dot"></span></div><div class="orbit orbit-two"><span class="orbit-dot"></span></div>
+<div class="heart-core" id="heartCore" role="button" tabindex="0" aria-label="Send a little love">💗</div>
+</div></div>
+<div class="center"><p class="heart-caption"><strong>A soft little reminder:</strong> love means listening, learning, and showing up.</p><button class="heart-touch" id="heartTouch">Send a little love into the sky ♡</button></div>
+</section>
 <section id="letter"><div class="paper reveal"><div class="center"><div class="eyebrow">the words I owe you</div><h2 class="section-title">A letter, from me to you</h2></div><div class="letter">My love,
 
 I'm genuinely sorry for hurting you. I'm sorry for the moments when my words or actions made your heart heavy, when I made you feel anything less than loved, safe, and valued. You didn't deserve that hurt.
@@ -85,7 +123,8 @@ I'm sorry, my love. I love you, and I want to love you better. ♡</div><div cla
 <div class="paper center reveal"><div class="eyebrow">a tiny garden of apologies</div><h2 class="section-title">Little sorrys, from my heart</h2><p class="section-copy">Tap the button for another honest reminder of what I want to take responsibility for.</p><div class="apology-note" id="sorryLine" aria-live="polite">I'm sorry for the hurt I caused. I wish I could make that moment gentler for you.</div><div class="actions"><button class="btn primary" id="nextSorry">Another little sorry ♡</button><button class="btn soft" id="bloomButton">Make the garden bloom ✿</button></div><div class="apology-note" id="bloomMessage" hidden>🌷 One flower for patience. 🌼 One for understanding. 🌸 One for the work I still need to do. A flower can't fix things, but it can remind me to keep growing.</div></div>
 </section>
 <section id="promise-garden"><div class="center reveal"><div class="eyebrow">small things, real effort</div><h2 class="section-title">A little promise garden</h2><p class="section-copy">Tap a flower to uncover one small way I want to love you better.</p><div class="actions"><button class="love-extra-btn" data-promise="I will listen to understand, not just wait for my turn to speak. 🌷">🌷 Listening</button><button class="love-extra-btn" data-promise="I will respect your feelings, even when they are hard for me to hear. 🌼">🌼 Understanding</button><button class="love-extra-btn" data-promise="I will keep my word and let consistent actions build trust. 🌻">🌻 Consistency</button><button class="love-extra-btn" data-promise="I will respect your space and never demand forgiveness on my timeline. 🌹">🌹 Patience</button></div><div class="apology-note" id="promiseMessage" hidden aria-live="polite"></div></div></section>
-\n<section class="final" id="last"><div class="paper center reveal"><div class="big-heart">💗</div><div class="eyebrow">and now, it's your turn</div><h2 class="section-title">Can we take a little step?</h2><p class="section-copy">I would love the chance to make things better, one honest step at a time. But I care about your heart enough to let you choose what you need.</p><div class="choice-buttons"><button class="btn primary" data-response="talk">I'm open to talking ♡</button><button class="btn soft" data-response="time">I need a little time 🤍</button><button class="btn soft" data-response="hug">Send me a virtual hug 🧸</button></div><div class="response" id="response" role="status" aria-live="polite"></div><p class="tiny" style="margin-top:25px">Whatever you feel, you can be honest with me. No pressure, no deadline. Your feelings matter.</p></div></section>
+
+<section class="final" id="last"><div class="paper center reveal"><div class="big-heart">💗</div><div class="eyebrow">and now, it's your turn</div><h2 class="section-title">Can we take a little step?</h2><p class="section-copy">I would love the chance to make things better, one honest step at a time. But I care about your heart enough to let you choose what you need.</p><div class="choice-buttons"><button class="btn primary" data-response="talk">I'm open to talking ♡</button><button class="btn soft" data-response="time">I need a little time 🤍</button><button class="btn soft" data-response="hug">Send me a virtual hug 🧸</button></div><div class="response" id="response" role="status" aria-live="polite"></div><p class="tiny" style="margin-top:25px">Whatever you feel, you can be honest with me. No pressure, no deadline. Your feelings matter.</p></div></section>
 </main>
 <footer>made with a soft heart, honest intentions & lots of love <span style="color:#d94f79">♡</span><br><span class="tiny">A small page, and a promise to keep doing the real work offline, too.</span></footer>
 <script>
@@ -136,6 +175,19 @@ document.getElementById('bloomButton').addEventListener('click',()=>{
 document.querySelectorAll('[data-promise]').forEach(b=>b.addEventListener('click',()=>{
  const msg=document.getElementById('promiseMessage');msg.textContent=b.dataset.promise;msg.hidden=false;
 }));
+
+const heartTouch=document.getElementById('heartTouch');
+const heartCore=document.getElementById('heartCore');
+function heartBurst(){burst(28);heartCore.animate([{transform:'translateZ(55px) scale(1)'},{transform:'translateZ(100px) scale(1.35)'},{transform:'translateZ(55px) scale(1)'}],{duration:650,easing:'cubic-bezier(.2,.8,.2,1)'});}
+heartTouch.addEventListener('click',heartBurst);
+heartCore.addEventListener('click',heartBurst);
+heartCore.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();heartBurst()}});
+const heartUniverse=document.getElementById('heartUniverse'),heartStage=document.getElementById('heartStage');
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+heartUniverse.addEventListener('pointermove',e=>{const r=heartUniverse.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;heartStage.style.transform='rotateY('+(x*12)+'deg) rotateX('+(-y*8)+'deg)'});
+heartUniverse.addEventListener('pointerleave',()=>heartStage.style.transform='');
+}
+
 let audio=null,playing=false, timer=null,step=0;
 function stopMusic(){if(audio){try{audio.osc.stop()}catch(e){}audio.ctx.close();audio=null}if(timer)clearTimeout(timer);playing=false;const b=document.getElementById('musicBtn');b.textContent='♫ Little melody: off';b.setAttribute('aria-pressed','false')}
 function playNote(){if(!audio||!playing)return;const notes=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,587.33,659.25,523.25];const ctx=audio.ctx;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=notes[step%notes.length];gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.045,ctx.currentTime+.04);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.42);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.45);step++;timer=setTimeout(playNote,470)}
